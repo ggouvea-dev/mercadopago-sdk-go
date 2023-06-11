@@ -36,10 +36,11 @@ type PaymentResponse struct {
 			Original float64 `json:"original"`
 			Refunded int     `json:"refunded"`
 		} `json:"amounts"`
-		ClientId      int                    `json:"client_id"`
-		DateCreated   time.Time              `json:"date_created"`
-		Id            string                 `json:"id"`
-		LastUpdated   time.Time              `json:"last_updated"`
+		ClientId    int       `json:"client_id"`
+		DateCreated time.Time `json:"date_created"`
+		Id          string    `json:"id"`
+		LastUpdated time.Time `json:"last_updated"`
+		//Metadata
 		Metadata      map[string]interface{} `json:"metadata"`
 		Name          string                 `json:"name"`
 		RefundCharges []interface{}          `json:"refund_charges"`
