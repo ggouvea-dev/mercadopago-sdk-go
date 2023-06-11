@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"os"
 
-	"github.com/eduardo-mior/mercadopago-sdk-go/internal/request"
+	"github.com/ggouvea-dev/mercadopago-sdk-go/internal/request"
 )
 
 const BASEURL = "https://api.mercadopago.com"

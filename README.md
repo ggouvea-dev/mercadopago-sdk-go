@@ -5,7 +5,7 @@ SDK (não oficial) para consumir os serviços do MercadoPago em Golang.
 ## 📲  Instalação
 Para baixar o SDK basta utilizar o seguinte comando:
 ```bash
-$ go get -u github.com/eduardo-mior/mercadopago-sdk-go
+$ go get -u github.com/ggouvea-dev/mercadopago-sdk-go
 ```
 
 ## 🛠 Funcionalidades do SDK
@@ -21,7 +21,7 @@ Funcionalidades disponíbilizadas no SDK:
 ## 🌟  Começando 
 Para começar você deve fazer o `import` do SDK, para isso basta adicionar a seguinte linha no seu código:
 ```go
-import "github.com/eduardo-mior/mercadopago-sdk-go"
+import "github.com/ggouvea-dev/mercadopago-sdk-go"
 ```
 Feito isso já esta tudo pronto para você começar a utilizaro SDK!
 

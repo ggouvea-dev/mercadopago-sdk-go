@@ -3,37 +3,183 @@ package mercadopago
 import (
 	"time"
 
-	"github.com/eduardo-mior/mercadopago-sdk-go/internal/request"
+	"github.com/ggouvea-dev/mercadopago-sdk-go/internal/request"
 )
 
 // PaymentResponse é a struct que é usada para receber os dados do request de novo pagamento do MercadoPago.
 type PaymentResponse struct {
-	CollectorID   int      `json:"collector_id"`   // Nosso ID do MercadoPago
-	OperationType string   `json:"operation_type"` // Tipo da operação (regular_payment, money_transfer)
-	Items         []Item   `json:"items"`          // Itens vendidos
-	Payer         Payer    `json:"payer"`          // Informações do pagador da cobrança
-	BackUrls      BackUrls `json:"back_urls"`      // URLS de redirecionamento
-	// Indica se o comprador será redirecionado automaticamente para o back_urls após a compra
-	// Use "approved" para redirecionar apenas no caso de sucesso
-	// User "all" para todos os casos
-	AutoReturn         string         `json:"auto_return"`
-	PaymentMethods     PaymentMethods `json:"payment_methods"`      // Configurações das condições de pagamento do pagamento
-	ClientID           string         `json:"client_id"`            // ID do cliente do MercadoPago
-	Marketplace        string         `json:"marketplace"`          // Indica de qual marketplace foi feito pagamento (padrão NENHUM)
-	MarketplaceFee     float64        `json:"marketplace_fee"`      // Comissão de Mercado cobrada pelo proprietario do aplicativo
-	Shipments          Shipments      `json:"shipments"`            // Informações de envio dos itens
-	NotificationURL    string         `json:"notification_url"`     // URL do Webhook que é chamada quando o Status do pagamento é atualizado
-	ExternalReference  string         `json:"external_reference"`   // Nosso ID de controle interno
-	AdditionalInfo     string         `json:"additional_info"`      // Informações adicionais do pagamento
-	Expires            bool           `json:"expires"`              // Indica se o pagamento possui possui data de expiração
-	DateOfExpiration   *time.Time     `json:"date_of_expiration"`   // Data de expiração de meios de pagamento em dinheiro
-	ExpirationDateFrom *time.Time     `json:"expiration_date_from"` // A partir de qual data o pagamento estara ativo
-	ExpirationDateTo   *time.Time     `json:"expiration_date_to"`   // Até qual data o pagamento estara ativo
-	DateCreated        time.Time      `json:"date_created"`         // Data de criação do pagamento (gerado pelo MercadoPago)
-	ID                 string         `json:"id"`                   // ID do pagamento do MercadoPago (gerado pelo MercadoPago)
-	InitPoint          string         `json:"init_point"`           // Link de pagamento do pagamento
-	SandboxInitPoint   string         `json:"sandbox_init_point"`   // Link de pagamento de staging do pagamento
-	SiteID             string         `json:"site_id"`              // ID do site do pagamento
+	AccountsInfo           interface{}   `json:"accounts_info"`
+	AcquirerReconciliation []interface{} `json:"acquirer_reconciliation"`
+	AdditionalInfo         struct {
+		AuthenticationCode interface{} `json:"authentication_code"`
+		AvailableBalance   interface{} `json:"available_balance"`
+		BankInfo           struct {
+			IsSameBankAccountOwner bool `json:"is_same_bank_account_owner"`
+		} `json:"bank_info"`
+		NsuProcessadora interface{} `json:"nsu_processadora"`
+	} `json:"additional_info"`
+	AuthorizationCode  interface{} `json:"authorization_code"`
+	BinaryMode         bool        `json:"binary_mode"`
+	BrandId            interface{} `json:"brand_id"`
+	BuildVersion       string      `json:"build_version"`
+	CallForAuthorizeId interface{} `json:"call_for_authorize_id"`
+	CallbackUrl        interface{} `json:"callback_url"`
+	Captured           bool        `json:"captured"`
+	Card               struct {
+	} `json:"card"`
+	ChargesDetails []struct {
+		Accounts struct {
+			From string `json:"from"`
+			To   string `json:"to"`
+		} `json:"accounts"`
+		Amounts struct {
+			Original float64 `json:"original"`
+			Refunded int     `json:"refunded"`
+		} `json:"amounts"`
+		ClientId      int                    `json:"client_id"`
+		DateCreated   time.Time              `json:"date_created"`
+		Id            string                 `json:"id"`
+		LastUpdated   time.Time              `json:"last_updated"`
+		Metadata      map[string]interface{} `json:"metadata"`
+		Name          string                 `json:"name"`
+		RefundCharges []interface{}          `json:"refund_charges"`
+		ReserveId     interface{}            `json:"reserve_id"`
+		Type          string                 `json:"type"`
+	} `json:"charges_details"`
+	CollectorId           int         `json:"collector_id"`
+	CorporationId         interface{} `json:"corporation_id"`
+	CounterCurrency       interface{} `json:"counter_currency"`
+	CouponAmount          int         `json:"coupon_amount"`
+	CurrencyId            string      `json:"currency_id"`
+	DateApproved          time.Time   `json:"date_approved"`
+	DateCreated           time.Time   `json:"date_created"`
+	DateLastUpdated       time.Time   `json:"date_last_updated"`
+	DateOfExpiration      time.Time   `json:"date_of_expiration"`
+	DeductionSchema       interface{} `json:"deduction_schema"`
+	Description           string      `json:"description"`
+	DifferentialPricingId interface{} `json:"differential_pricing_id"`
+	ExternalReference     interface{} `json:"external_reference"`
+	FeeDetails            []struct {
+		Amount   float64 `json:"amount"`
+		FeePayer string  `json:"fee_payer"`
+		Type     string  `json:"type"`
+	} `json:"fee_details"`
+	FinancingGroup    interface{} `json:"financing_group"`
+	Id                int64       `json:"id"`
+	Installments      int         `json:"installments"`
+	IntegratorId      interface{} `json:"integrator_id"`
+	IssuerId          string      `json:"issuer_id"`
+	LiveMode          bool        `json:"live_mode"`
+	MarketplaceOwner  interface{} `json:"marketplace_owner"`
+	MerchantAccountId interface{} `json:"merchant_account_id"`
+	MerchantNumber    interface{} `json:"merchant_number"`
+	Metadata          struct {
+	} `json:"metadata"`
+	MoneyReleaseDate   time.Time   `json:"money_release_date"`
+	MoneyReleaseSchema interface{} `json:"money_release_schema"`
+	MoneyReleaseStatus interface{} `json:"money_release_status"`
+	NotificationUrl    string      `json:"notification_url"`
+	OperationType      string      `json:"operation_type"`
+	Order              struct {
+	} `json:"order"`
+	Payer struct {
+		Email          string      `json:"email"`
+		EntityType     interface{} `json:"entity_type"`
+		FirstName      interface{} `json:"first_name"`
+		Id             string      `json:"id"`
+		Identification struct {
+			Number string `json:"number"`
+			Type   string `json:"type"`
+		} `json:"identification"`
+		LastName   interface{} `json:"last_name"`
+		OperatorId interface{} `json:"operator_id"`
+		Phone      struct {
+			AreaCode  interface{} `json:"area_code"`
+			Extension interface{} `json:"extension"`
+			Number    interface{} `json:"number"`
+		} `json:"phone"`
+		Type interface{} `json:"type"`
+	} `json:"payer"`
+	PaymentMethod struct {
+		Id       string `json:"id"`
+		IssuerId string `json:"issuer_id"`
+		Type     string `json:"type"`
+	} `json:"payment_method"`
+	PaymentMethodId    string      `json:"payment_method_id"`
+	PaymentTypeId      string      `json:"payment_type_id"`
+	PlatformId         interface{} `json:"platform_id"`
+	PointOfInteraction struct {
+		ApplicationData struct {
+			Name    interface{} `json:"name"`
+			Version interface{} `json:"version"`
+		} `json:"application_data"`
+		BusinessInfo struct {
+			SubUnit string `json:"sub_unit"`
+			Unit    string `json:"unit"`
+		} `json:"business_info"`
+		Location struct {
+			Source  interface{} `json:"source"`
+			StateId interface{} `json:"state_id"`
+		} `json:"location"`
+		SubType         string `json:"sub_type"`
+		TransactionData struct {
+			BankInfo struct {
+				Collector struct {
+					AccountHolderName string      `json:"account_holder_name"`
+					AccountId         int64       `json:"account_id"`
+					LongName          string      `json:"long_name"`
+					TransferAccountId interface{} `json:"transfer_account_id"`
+				} `json:"collector"`
+				IsSameBankAccountOwner bool        `json:"is_same_bank_account_owner"`
+				OriginBankId           interface{} `json:"origin_bank_id"`
+				OriginWalletId         interface{} `json:"origin_wallet_id"`
+				Payer                  struct {
+					AccountId         int         `json:"account_id"`
+					ExternalAccountId interface{} `json:"external_account_id"`
+					Id                interface{} `json:"id"`
+					LongName          string      `json:"long_name"`
+				} `json:"payer"`
+			} `json:"bank_info"`
+			BankTransferId           int64       `json:"bank_transfer_id"`
+			E2EId                    interface{} `json:"e2e_id"`
+			FinancialInstitution     int         `json:"financial_institution"`
+			InfringementNotification struct {
+				Status interface{} `json:"status"`
+				Type   interface{} `json:"type"`
+			} `json:"infringement_notification"`
+			QrCode        string `json:"qr_code"`
+			QrCodeBase64  string `json:"qr_code_base64"`
+			TicketUrl     string `json:"ticket_url"`
+			TransactionId string `json:"transaction_id"`
+		} `json:"transaction_data"`
+		Type string `json:"type"`
+	} `json:"point_of_interaction"`
+	PosId                     interface{}   `json:"pos_id"`
+	ProcessingMode            string        `json:"processing_mode"`
+	Refunds                   []interface{} `json:"refunds"`
+	ShippingAmount            int           `json:"shipping_amount"`
+	SponsorId                 interface{}   `json:"sponsor_id"`
+	StatementDescriptor       interface{}   `json:"statement_descriptor"`
+	Status                    string        `json:"status"`
+	StatusDetail              string        `json:"status_detail"`
+	StoreId                   interface{}   `json:"store_id"`
+	Tags                      interface{}   `json:"tags"`
+	TaxesAmount               int           `json:"taxes_amount"`
+	TransactionAmount         int           `json:"transaction_amount"`
+	TransactionAmountRefunded int           `json:"transaction_amount_refunded"`
+	TransactionDetails        struct {
+		AcquirerReference        interface{} `json:"acquirer_reference"`
+		BankTransferId           int64       `json:"bank_transfer_id"`
+		ExternalResourceUrl      interface{} `json:"external_resource_url"`
+		FinancialInstitution     string      `json:"financial_institution"`
+		InstallmentAmount        int         `json:"installment_amount"`
+		NetReceivedAmount        float64     `json:"net_received_amount"`
+		OverpaidAmount           int         `json:"overpaid_amount"`
+		PayableDeferralPeriod    interface{} `json:"payable_deferral_period"`
+		PaymentMethodReferenceId interface{} `json:"payment_method_reference_id"`
+		TotalPaidAmount          int         `json:"total_paid_amount"`
+		TransactionId            string      `json:"transaction_id"`
+	} `json:"transaction_details"`
 }
 
 // PaymentRequest é a struct que é usada para fazer a request de um novo pagamento para o MercadoPago
